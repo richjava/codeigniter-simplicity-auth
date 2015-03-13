@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'http://localhost/codeigniter-simplicity-auth/';
+$config['base_url']	= 'http://localhost/ci-simplicity-auth/';
 
 /*
 |--------------------------------------------------------------------------
