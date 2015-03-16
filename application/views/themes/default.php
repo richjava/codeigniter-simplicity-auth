@@ -14,8 +14,10 @@
 	<link href="<?php echo base_url(); ?>assets/themes/default/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url(); ?>assets/themes/default/css/layout.css" rel="stylesheet" type="text/css" />
 
-	<link href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.css" rel="stylesheet">
-	<link href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-responsive.css" rel="stylesheet">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     </head>
     <body id="page">
 	<div class="tail-top-right"></div>
@@ -46,11 +48,16 @@
 		    <div class="col-2">
 			<div class="indent">
 			    <div style="text-align: right;">
-			    <?php if ($this->session->userdata('is_logged_in')): ?>
-    			    <a href="<?php echo site_url('auth/logout'); ?>">Sign out</a>
-			    <?php else: ?>
-    			    <a href="<?php echo site_url('auth/login'); ?>">Sign in</a>   
-			    <?php endif; ?>
+				<?php if ($this->session->userdata('is_logged_in')): ?>             
+    				<a href="<?php echo site_url('auth/logout'); ?>">Sign out</a>
+				<?php else: ?>
+    				<!--ajax login modal dialog-->
+    				<a href="#" class="btn btn-lg btn-success"
+    				   data-toggle="modal"
+    				   data-target="#basicModal">Sign in with AJAX</a>
+				<!--regular login-->
+				<a href="<?php echo site_url('auth/login'); ?>" class="btn btn-lg btn-success">Sign in with page refresh</a>   
+				<?php endif; ?>
 			    </div>
 			    <?php echo $output; ?>
 			</div>
@@ -63,7 +70,50 @@
 		    <div class="fleft"><a href="https://blogs.oracle.com/netbeansphp/">NetBeans PHP team</a>, 2011 &copy; Copyright Oracle corp., All rights reserved</div>
 		</div>
 	    </div>
+	    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Sign In</h4>
+                        </div>
+                        <form action="<?php echo base_url() ?>auth/validate" method="POST">
+			    <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input id="username" class="form-control" name="username"/>    
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input id="password" class="form-control" name="password" type="password"/>
+                                </div>
+				<?php echo "Don't have an account? " . anchor('auth/signup', "Create an account."); ?>
+			    </div>
+
+			    <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit"  class="btn btn-primary">Sign In</button>
+			    </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 	</div>
-	</div>
+	<script type="text/javascript">
+	    //ajax login functionality
+	    $(document).ready(function() {
+		$("#frm_login").submit(function(e) {
+		    e.preventDefault();
+		    var url = $(this).attr('action');
+		    var method = $(this).attr('method');
+		    var data = $(this).serialize();
+		    $.ajax({
+			url: url,
+			type: method,
+			data: data
+		    });
+		});
+	    });
+        </script>
     </body>
 </html>
