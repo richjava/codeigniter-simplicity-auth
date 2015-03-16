@@ -6,18 +6,14 @@ class Auth extends CI_Controller {
 
     function __construct() {
 	parent::__construct();
-
 	$this->load->helper('url');
-
-	$this->_init();
     }
 
     /**
      * Set up.
      */
-    private function _init() {
+    private function _init() {	
 	$this->output->set_template('default');
-
 	$this->load->js('assets/themes/default/js/jquery-1.9.1.min.js');
 	$this->load->js('assets/themes/default/js/jquery-ui-1.8.16.custom.min.js');
 	$this->load->js('assets/themes/default/js/script.js');
@@ -27,6 +23,7 @@ class Auth extends CI_Controller {
      * Display home page.
      */
     public function index() {
+	$this->_init();
 	$this->load->view('pages/home');
     }
 
@@ -34,20 +31,32 @@ class Auth extends CI_Controller {
      * Display Login page.
      */
     public function login() {
+	$this->_init();
 	$this->load->helper('form');
 	$this->load->view('pages/login');
     }
+    
+    /**
+     * Display Sign Up page.
+     */
+    public function signup() {
+	$this->_init();
+	$this->load->helper('form');
+	$this->load->view('pages/signup');
+    }
 
     /**
-     * Sign the user out and return to home page.
+     * Sign the user out and load home page.
      */
     public function logout() {
+	$this->_init();
 	$this->session->sess_destroy();
 	$this->load->view('pages/home');
     }
 
    /**
-    * Validate that the user is a member. Used as part of login functionality.
+    * Validate that the user is a member. Used as part of login 
+    * (and AJAX login) functionality.
     */
     public function validate() {
 	$this->load->model('User');
@@ -69,15 +78,8 @@ class Auth extends CI_Controller {
 	);
 	$this->session->set_userdata($data);
 	redirect('/auth');
-    }
+    }  
     
-    /**
-     * Display Sign Up page.
-     */
-    public function signup() {
-	$this->load->helper('form');
-	$this->load->view('pages/signup');
-    }
 
     /**
      * Create a new user and store in db. Used as part of Signup functionality.
@@ -113,5 +115,4 @@ class Auth extends CI_Controller {
 	    }
 	}
     }
-
 }
