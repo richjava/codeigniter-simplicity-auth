@@ -39,7 +39,7 @@
 */
 
 
-$route['default_controller'] = "auth2";
+$route['default_controller'] = "auth";
 
 
 $route['404_override'] = '';
