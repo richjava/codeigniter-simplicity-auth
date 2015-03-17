@@ -77,7 +77,6 @@ class Auth extends CI_Controller {
 	    'is_logged_in' => true
 	);
 	$this->session->set_userdata($data);
-	redirect('/auth');
     }  
     
 
