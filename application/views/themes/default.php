@@ -55,8 +55,8 @@
     				<a href="#" class="btn btn-lg btn-success"
     				   data-toggle="modal"
     				   data-target="#basicModal">Sign in with AJAX</a>
-				<!--regular login-->
-				<a href="<?php echo site_url('auth/login'); ?>" class="btn btn-lg btn-success">Sign in with page refresh</a>   
+    				<!--regular login-->
+    				<a href="<?php echo site_url('auth/login'); ?>" class="btn btn-lg btn-success">Sign in with page refresh</a>   
 				<?php endif; ?>
 			    </div>
 			    <?php echo $output; ?>
@@ -77,7 +77,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Sign In</h4>
                         </div>
-                        <form action="<?php echo base_url() ?>auth/validate" method="POST">
+                        <form id="frm_login" action="<?php echo base_url() ?>auth/validate" method="POST">
 			    <div class="modal-body">
                                 <div class="form-group">
                                     <label for="username">Username</label>
@@ -100,6 +100,8 @@
             </div>
 	</div>
 	<script type="text/javascript">
+
+
 	    //ajax login functionality
 	    $(document).ready(function() {
 		$("#frm_login").submit(function(e) {
@@ -111,6 +113,8 @@
 			url: url,
 			type: method,
 			data: data
+		    }).done(function() {
+			window.location.href = 'auth';
 		    });
 		});
 	    });
