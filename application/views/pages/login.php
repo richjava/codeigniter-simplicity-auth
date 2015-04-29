@@ -6,7 +6,7 @@ if ($this->session->flashdata('error')):
     <div class="alert alert-error" role="alert"><?php echo $this->session->flashdata('error'); ?></div>
 <?php endif; ?>
 <?php echo validation_errors(); ?>
-<?php echo form_open('auth/validate'); ?>
+<?php echo form_open('auth/validate_user'); ?>
 <fieldset>
     <div class="field">
 	<?php echo form_label('Username', 'username'); ?>

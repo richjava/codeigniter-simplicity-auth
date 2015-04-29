@@ -53,15 +53,22 @@ class Auth extends CI_Controller {
 	$this->session->sess_destroy();
 	$this->load->view('pages/home');
     }
+    
+    public function validate_user(){
+	$this->validate(false);	
+    }
 
    /**
-    * Validate that the user is a member. Used as part of login 
+    * Validate that the user is a member. Also used as part of login 
     * (and AJAX login) functionality.
     */
-    public function validate() {
+    public function validate($is_ajax = true) {
 	$this->load->model('User');
 	if ($this->User->validate()) {
 	    $this->_do_login();
+	    if(!$is_ajax){
+		redirect('auth');
+	    }
 	} else { // incorrect username or password
 	    $this->session->set_flashdata('error', 'Incorrect username and/or password. Please try again.');
 	    redirect('/auth/login', 'refresh');
